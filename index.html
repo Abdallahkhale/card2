@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Wedding Invitation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Playfair Display', serif;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+    body {
+      background-color: #f9f7f4;
+      color: #5a5a5a;
+      line-height: 1.6;
+      overflow: hidden;
+    }
+    .container {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+    /* Generic Page Styles */
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .page.active {
+      display: flex;
+      opacity: 1;
+    }
+    /* First Page: Wedding Card */
+    .envelope-page {
+      background: linear-gradient(135deg, #f5e1e5 0%, #f2d0d6 50%, #f5e1e5 100%);
+      cursor: pointer;
+    }
+    .envelope-content {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .to-my-text {
+      position: absolute;
+      left: 2%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #b67f91;
+    }
+    .invitation-title {
+      font-size: 2.8rem;
+      color: #9a7b69;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+    }
+    .wax-seal {
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, #e8bcc4 60%, #d4a88e 100%);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+      margin: 20px 0;
+      transition: transform 0.3s ease;
+    }
+    .wax-seal:hover {
+      transform: scale(1.05);
+    }
+    .wax-seal:before {
+      content: "❀";
+      font-size: 50px;
+      color: #b67f91;
+    }
+    .tap-instruction {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: #b67f91;
+      margin-top: 20px;
+      opacity: 0.9;
+    }
+    /* Second Page: Wedding Photo */
+    .photo-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .photo {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      margin: 0;
+      padding: 0;
+    }
+    /* Location Button */
+    .location-button {
+      position: absolute;
+      bottom: 50px;
+      left: 20px;
+      background-color: rgba(255,255,255,0.8);
+      color: #9a7b69;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(154,123,105,0.3);
+      backdrop-filter: blur(5px);
+      z-index: 10;
+      text-decoration: none;
+    }
+    .location-button:hover {
+      transform: scale(1.1);
+      background-color: rgba(255,255,255,0.9);
+    }
+    .location-icon {
+      font-size: 18px;
+      margin-bottom: 3px;
+      color: #9a7b69;
+    }
+    .location-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: #9a7b69;
+    }
+    #photo {
+      padding: 0;
+      margin: 0;
+      justify-content: center;
+      align-items: center;
+    }
+    /* Audio controls - hidden but functional */
+    .audio-player {
+      display: none;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- First Page -->
+    <div class="page envelope-page active" id="envelope" onclick="showPage('photo')">
+      <div class="envelope-content">
+        <div class="to-my-text">To my Best Friend</div>
+        <h1 class="invitation-title">Our Wedding</h1>
+        <div class="wax-seal"></div>
+        <p class="tap-instruction">Tap to open</p>
+      </div>
+    </div>
+    <!-- Second Page -->
+    <div class="page" id="photo">
+      <div class="photo-container"><img src="invat.png" alt="Wedding Photo" class="photo"></div>
+      <audio id="background-music" class="audio-player">
+        <source src="record.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      <a href="https://www.google.com/maps/place/38H3%2BM6H+%D8%AF%D8%A7%D8%B1+%D8%B6%D8%A8%D8%A7%D8%B7+%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D8%A9%D8%8C+Ismail,+Bridge+%D8%A7%D9%84%D9%81%D9%86%D8%AC%D8%B1%D9%8A+Beside,+Mansheyat+Al+Bakri%D8%8C+%D9%82%D8%B3%D9%85+%D9%85%D8%B5%D8%B1+%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%D8%8C+%D9%85%D8%AD%D8%A7%D9%81%D8%B8%D8%A9+%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%E2%80%AC%E2%80%AD/data=!4m2!3m1!1s0x14583fc9ef639315:0x4c7e3b3bff7bcecb?utm_source=mstt_1&entry=gps&coh=192189&g_ep=CAESBzI1LjExLjIYACDXggMqfiw5NDI1OTU1MSw5NDI0MjU4Niw5NDIyMzI5OSw5NDIxNjQxMyw5NDIxMjQ5Niw5NDIxMjY2NSw5NDIwNzM5NCw5NDIwNzUwNiw5NDIwODUwNiw5NDIxNzUyMyw5NDIxODY1Myw5NDIyOTgzOSw0NzA4NDM5Myw5NDIxMzIwMEICRUc%3D&g_st=aw" target="_blank" class="location-button">
+        <div class="location-icon">🗺️</div>
+        <div class="location-text">Location</div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(function(pg) {
+        pg.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+      
+      // If photo page is being shown, play the audio
+      if (pageId === 'photo') {
+        const audio = document.getElementById('background-music');
+        audio.currentTime = 0; // Start from beginning
+        audio.play().catch(e => {
+          console.log("Audio playback failed, likely due to browser autoplay policy:", e);
+          // Many modern browsers require user interaction before playing audio
+          // Could add a visible play button here if needed
+        });
+      } else {
+        // If switching away from photo page, pause the audio
+        const audio = document.getElementById('background-music');
+        if (!audio.paused) {
+          audio.pause();
+        }
+      }
+    }
+  </script>
+</body>
+</html>
